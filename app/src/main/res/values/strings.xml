@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AppBeaconDemoI</string>
+    <string name="uuid">Uuid</string>
+    <string name="major">Major</string>
+    <string name="minor">Minor</string>
+    <string name="distance">Distancia</string>
 </resources>
