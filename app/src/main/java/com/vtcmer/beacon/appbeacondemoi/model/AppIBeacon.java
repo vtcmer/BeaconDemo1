@@ -57,7 +57,7 @@ public class AppIBeacon {
 
     @Override
     public String toString() {
-        return "AppIBeacon{" +
+        return "ApplicationIBeacon{" +
                 "uuid='" + uuid + '\'' +
                 ", major=" + major +
                 ", minor=" + minor +

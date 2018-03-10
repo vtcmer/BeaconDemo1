@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.vtcmer.beacon.appbeacondemoi.di.ScannerBeaconComponent;
 import com.vtcmer.beacon.appbeacondemoi.model.AppIBeacon;
 import com.vtcmer.beacon.appbeacondemoi.scanner.OnScannerBeaconServiceCallback;
 import com.vtcmer.beacon.appbeacondemoi.scanner.OnSelectBeaconItemCallBack;
@@ -44,6 +45,16 @@ public class MainActivity extends AppCompatActivity implements OnScannerBeaconSe
         recyclerView.setAdapter(adapter);
     }
 
+    private void setupInjection(){
+        ApplicationIBeacon applicationIBeacon = (ApplicationIBeacon) this.getApplication();
+
+        ScannerBeaconComponent scannerBeaconComponent = applicationIBeacon.getScannerBeaconComponent(this,this,this);
+
+        this.scannerBeaconService = scannerBeaconComponent.getScannerBeaconService();
+        this.adapter = scannerBeaconComponent.getBeaconDetectedListAdapter();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +62,9 @@ public class MainActivity extends AppCompatActivity implements OnScannerBeaconSe
         ButterKnife.bind(this);
 
         this.isScanning = false;
-        adapter = new BeaconDetectedListAdapter(this, this);
+        this.setupInjection();
         setupRecyclerView();
-        this.scannerBeaconService = new ScannerBeaconServiceImpl(this.getApplicationContext(), this);
-
+     
 
     }
 

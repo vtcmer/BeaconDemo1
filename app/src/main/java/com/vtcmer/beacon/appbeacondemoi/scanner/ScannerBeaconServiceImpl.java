@@ -150,7 +150,7 @@ public class ScannerBeaconServiceImpl implements ScannerBeaconService, BeaconCon
                     } else {
                         return -1;
                     }
-                    
+
                 }
             });
 
