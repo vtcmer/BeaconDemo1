@@ -19,6 +19,9 @@ import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by vtcmer on 8/03/18.
@@ -122,8 +125,9 @@ public class ScannerBeaconServiceImpl implements ScannerBeaconService, BeaconCon
 
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-        if (beacons.size() > 0) {
 
+        if (beacons.size() > 0) {
+            List<AppIBeacon> appIBeaconList = new ArrayList<AppIBeacon>();
             for (Beacon beacon: beacons){
 
                 AppIBeacon iBeacon = new AppIBeacon();
@@ -131,10 +135,26 @@ public class ScannerBeaconServiceImpl implements ScannerBeaconService, BeaconCon
                 iBeacon.setMajor(beacon.getId2().toInt());
                 iBeacon.setMinor(beacon.getId3().toInt());
                 iBeacon.setDistance(beacon.getDistance());
-                onScannerBeaconServiceCallback.onBeaconFound(iBeacon);
+                appIBeaconList.add(iBeacon);
+
 
                 Log.d(TAG, iBeacon.toString());
             }
+
+            Collections.sort(appIBeaconList, new Comparator<AppIBeacon>() {
+                @Override
+                public int compare(AppIBeacon b1, AppIBeacon b2) {
+
+                    if (b1.getDistance() > b2.getDistance()){
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                    
+                }
+            });
+
+            onScannerBeaconServiceCallback.onBeaconsFound(appIBeaconList);
         }
     }
 

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerDetail"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingLeft="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/imgBeacon"
+        android:src="@mipmap/ble"
+        android:paddingRight="5dp"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/textBold"
+        android:text="UUID:"
+        android:id="@+id/uuidLb"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imgBeacon"
+        android:layout_toEndOf="@+id/imgBeacon" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textNormal"
+        android:text="bb:11:00"
+        android:id="@+id/uuid"
+        android:layout_toRightOf="@+id/uuidLb"
+          />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/textBold"
+        android:text="Major:"
+        android:id="@+id/majorLb"
+        android:layout_below="@+id/uuidLb"
+        android:layout_alignLeft="@+id/uuidLb"
+        android:layout_alignStart="@+id/uuidLb" />
+
+    <TextView
+        android:id="@+id/major"
+        style="@style/textNormal"
+        android:layout_marginTop="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/uuidLb"
+        android:layout_toEndOf="@+id/majorLb"
+        android:layout_toRightOf="@+id/majorLb"
+        android:text="Medium Text" />
+
+
+    <TextView
+        android:id="@+id/minorLb"
+        android:layout_marginLeft="10dp"
+        style="@style/textBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/major"
+        android:layout_toEndOf="@+id/major"
+        android:layout_toRightOf="@+id/major"
+        android:text="Minor:" />
+
+    <TextView
+        android:id="@+id/minor"
+        style="@style/textNormal"
+        android:layout_marginTop="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/minorLb"
+        android:layout_alignTop="@+id/minorLb"
+        android:layout_toEndOf="@+id/minorLb"
+        android:layout_toRightOf="@+id/minorLb"
+        android:text="Medium Text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/textBold"
+        android:text="Major:"
+        android:id="@+id/distanceLb"
+        android:layout_below="@+id/majorLb"
+        android:layout_alignLeft="@+id/majorLb"
+        android:layout_alignStart="@+id/majorLb" />
+
+    <TextView
+        android:id="@+id/distance"
+        style="@style/textNormal"
+        android:layout_marginTop="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/majorLb"
+        android:layout_toEndOf="@+id/majorLb"
+        android:layout_toRightOf="@+id/majorLb"
+        android:text="Medium Text" />
+
+
+    <ImageButton
+        android:id="@+id/position"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/position_undefined"
+        />
+
+</RelativeLayout>

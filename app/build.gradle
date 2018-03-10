@@ -21,6 +21,7 @@ android {
 
 final daggerVersion = '2.11'
 final butterknifeVersion = '8.5.1'
+final supportLibraryVersion = '26.1.0'
 
 
 dependencies {
@@ -39,4 +40,6 @@ dependencies {
     compile "com.google.dagger:dagger:${daggerVersion}"
     annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
     compile 'org.altbeacon:android-beacon-library:2.13.1'
+    compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
+    compile 'com.android.support:design:26.1.0'
 }

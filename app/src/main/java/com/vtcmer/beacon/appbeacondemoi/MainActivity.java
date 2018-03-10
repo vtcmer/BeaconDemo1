@@ -1,73 +1,61 @@
 package com.vtcmer.beacon.appbeacondemoi;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.vtcmer.beacon.appbeacondemoi.model.AppIBeacon;
 import com.vtcmer.beacon.appbeacondemoi.scanner.OnScannerBeaconServiceCallback;
+import com.vtcmer.beacon.appbeacondemoi.scanner.OnSelectBeaconItemCallBack;
 import com.vtcmer.beacon.appbeacondemoi.scanner.ScannerBeaconService;
 import com.vtcmer.beacon.appbeacondemoi.scanner.ScannerBeaconServiceImpl;
+import com.vtcmer.beacon.appbeacondemoi.ui.adapters.BeaconDetectedListAdapter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements OnScannerBeaconServiceCallback {
+public class MainActivity extends AppCompatActivity implements OnScannerBeaconServiceCallback, OnSelectBeaconItemCallBack {
 
-    protected static final String TAG = "RangingActivity";
-    @BindView(R.id.uuid)
-    EditText uuid;
-    @BindView(R.id.major)
-    EditText major;
-    @BindView(R.id.minor)
-    EditText minor;
-    @BindView(R.id.distance)
-    EditText distance;
-    @BindView(R.id.start)
-    Button start;
-    @BindView(R.id.stop)
-    Button stop;
+    protected static final String TAG = "MainActivity";
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.btnAction)
+    FloatingActionButton btnAction;
+    @BindView(R.id.container)
+    CoordinatorLayout container;
 
 
     private ScannerBeaconService scannerBeaconService;
+    private BeaconDetectedListAdapter adapter;
 
+    boolean isScanning = false;
+
+
+    private void setupRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_ibeacons_list);
         ButterKnife.bind(this);
 
+        this.isScanning = false;
+        adapter = new BeaconDetectedListAdapter(this, this);
+        setupRecyclerView();
         this.scannerBeaconService = new ScannerBeaconServiceImpl(this.getApplicationContext(), this);
 
-        stop.setEnabled(false);
-        stop.setAlpha(.5f);
 
-    }
-
-
-    @OnClick(R.id.start)
-    public void onStartViewClicked() {
-
-        start.setEnabled(false);
-        start.setAlpha(.5f);
-        stop.setEnabled(true);
-        stop.setAlpha(1);
-
-        this.scannerBeaconService.startScan();
-    }
-
-    @OnClick(R.id.stop)
-    public void onStopViewClicked() {
-        this.scannerBeaconService.stopScan();
-        stop.setEnabled(false);
-        stop.setAlpha(.5f);
-        start.setEnabled(true);
-        start.setAlpha(1);
-        this.clean();
     }
 
 
@@ -84,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements OnScannerBeaconSe
                 try {
                     // showToastMessage(str.toString());
                     //data.setText(info);
-                    renderBeacon(iBeacon);
+                    // renderBeacon(iBeacon);
+                    adapter.addIBeaconItem(iBeacon);
                 } catch (Exception e) {
                     Log.d(TAG, e.getMessage());
                 }
@@ -92,19 +81,52 @@ public class MainActivity extends AppCompatActivity implements OnScannerBeaconSe
         });
     }
 
-    private void renderBeacon(final AppIBeacon iBeacon) {
-
-        uuid.setText(iBeacon.getUuid());
-        major.setText(String.valueOf(iBeacon.getMajor()));
-        minor.setText(String.valueOf(iBeacon.getMinor()));
-        distance.setText(String.valueOf(iBeacon.getDistance()));
+    @Override
+    public void onBeaconsFound(final List<AppIBeacon> iBeacons) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                try {
+                    adapter.setIBeacons(iBeacons);
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                }
+            }
+        });
 
     }
 
-    private void clean() {
-        uuid.setText("");
-        major.setText("");
-        minor.setText("");
-        distance.setText("");
+    @Override
+    public void cleanAllBeacons() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                try {
+
+                    adapter.clean();
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                }
+            }
+        });
+    }
+
+
+    @OnClick(R.id.btnAction)
+    public void onViewClicked() {
+        if (isScanning){
+            this.scannerBeaconService.stopScan();
+            isScanning = false;
+            this.btnAction.setImageDrawable(ContextCompat.getDrawable(this, android.R.drawable.ic_menu_mylocation));
+            this.adapter.clean();
+        }else{
+            this.scannerBeaconService.startScan();
+            isScanning = true;
+            this.btnAction.setImageDrawable(ContextCompat.getDrawable(this, android.R.drawable.ic_delete));
+        }
+
+    }
+
+    @Override
+    public void onSelectItem(AppIBeacon appIBeacon) {
+        Log.i(TAG,"Item selected: "+appIBeacon.toString());
     }
 }
