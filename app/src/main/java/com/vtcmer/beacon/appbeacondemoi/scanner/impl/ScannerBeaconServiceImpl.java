@@ -1,4 +1,4 @@
-package com.vtcmer.beacon.appbeacondemoi.scanner;
+package com.vtcmer.beacon.appbeacondemoi.scanner.impl;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.vtcmer.beacon.appbeacondemoi.model.AppIBeacon;
+import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconService;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.ScannerBeaconServiceCallback;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -35,14 +37,14 @@ public class ScannerBeaconServiceImpl implements ScannerBeaconService, BeaconCon
     private static final String ALL_BEACONS_REGION = "AllBeaconsRegion";
 
     private Context context;
-    private OnScannerBeaconServiceCallback onScannerBeaconServiceCallback;
+    private ScannerBeaconServiceCallback onScannerBeaconServiceCallback;
 
     private BeaconManager mBeaconManager;
 
     // Representa el criterio de campos con los que buscar beacons
     private Region mRegion;
 
-    public ScannerBeaconServiceImpl(final Context context, final OnScannerBeaconServiceCallback onScannerBeaconServiceCallback){
+    public ScannerBeaconServiceImpl(final Context context, final ScannerBeaconServiceCallback onScannerBeaconServiceCallback){
         this.context = context;
         this.onScannerBeaconServiceCallback = onScannerBeaconServiceCallback;
 

@@ -2,10 +2,17 @@ package com.vtcmer.beacon.appbeacondemoi.di;
 
 import android.content.Context;
 
-import com.vtcmer.beacon.appbeacondemoi.scanner.OnScannerBeaconServiceCallback;
-import com.vtcmer.beacon.appbeacondemoi.scanner.OnSelectBeaconItemCallBack;
-import com.vtcmer.beacon.appbeacondemoi.scanner.ScannerBeaconService;
-import com.vtcmer.beacon.appbeacondemoi.scanner.ScannerBeaconServiceImpl;
+import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconInteractor;
+import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconPresenter;
+import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconRepository;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.ScannerBeaconServiceCallback;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.SelectBeaconItemCallBack;
+import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconService;
+import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconInteractorImpl;
+import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconPresenterImpl;
+import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconRepositoryMock;
+import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconServiceImpl;
+import com.vtcmer.beacon.appbeacondemoi.ui.ScannerBeaconView;
 import com.vtcmer.beacon.appbeacondemoi.ui.adapters.BeaconDetectedListAdapter;
 
 import javax.inject.Singleton;
@@ -20,24 +27,52 @@ import dagger.Provides;
 public class ScannerBeaconModule {
 
     private Context context;
-    private OnScannerBeaconServiceCallback onScannerBeaconServiceCallback;
-    private OnSelectBeaconItemCallBack onSelectBeaconItemCallBack;
+    private ScannerBeaconServiceCallback onScannerBeaconServiceCallback;
+    private SelectBeaconItemCallBack onSelectBeaconItemCallBack;
+    private ScannerBeaconView view;
 
-    public ScannerBeaconModule(Context context, OnScannerBeaconServiceCallback onScannerBeaconServiceCallback, OnSelectBeaconItemCallBack onSelectBeaconItemCallBack) {
+    public ScannerBeaconModule(Context context, ScannerBeaconServiceCallback onScannerBeaconServiceCallback,
+                               SelectBeaconItemCallBack onSelectBeaconItemCallBack, ScannerBeaconView view) {
         this.context = context;
         this.onScannerBeaconServiceCallback = onScannerBeaconServiceCallback;
         this.onSelectBeaconItemCallBack = onSelectBeaconItemCallBack;
+        this.view = view;
+    }
+
+
+    @Provides
+    @Singleton
+    ScannerBeaconView provideScannerBeaconView(){
+        return this.view;
     }
 
     @Provides
     @Singleton
-    ScannerBeaconService provideScannerBeaconService(final Context context, final OnScannerBeaconServiceCallback onScannerBeaconServiceCallback) {
+    ScannerBeaconPresenter provideScannerBeaconPresenter(final ScannerBeaconInteractor scannerBeaconInteractor, final ScannerBeaconView view){
+        return new ScannerBeaconPresenterImpl(scannerBeaconInteractor,view);
+    }
+
+    @Provides
+    @Singleton
+    ScannerBeaconInteractor provideScannerBeaconInteractor(final ScannerBeaconRepository scannerBeaconRepository){
+        return new ScannerBeaconInteractorImpl(scannerBeaconRepository);
+    }
+
+    @Provides
+    @Singleton
+    ScannerBeaconRepository provideScannerBeaconRepository(){
+        return new ScannerBeaconRepositoryMock();
+    }
+
+    @Provides
+    @Singleton
+    ScannerBeaconService provideScannerBeaconService(final Context context, final ScannerBeaconServiceCallback onScannerBeaconServiceCallback) {
         return new ScannerBeaconServiceImpl(context,onScannerBeaconServiceCallback);
     }
 
     @Provides
     @Singleton
-    BeaconDetectedListAdapter provideBeaconDetectedListAdapter(final OnSelectBeaconItemCallBack onSelectBeaconItemCallBack, final Context context){
+    BeaconDetectedListAdapter provideBeaconDetectedListAdapter(final SelectBeaconItemCallBack onSelectBeaconItemCallBack, final Context context){
         return new BeaconDetectedListAdapter(onSelectBeaconItemCallBack, context);
     }
 
@@ -49,13 +84,13 @@ public class ScannerBeaconModule {
 
     @Provides
     @Singleton
-    OnScannerBeaconServiceCallback provideOnScannerBeaconServiceCallback(){
+    ScannerBeaconServiceCallback provideOnScannerBeaconServiceCallback(){
         return this.onScannerBeaconServiceCallback;
     }
 
     @Provides
     @Singleton
-    OnSelectBeaconItemCallBack provideOnselOnSelectBeaconItemCallBack(){
+    SelectBeaconItemCallBack provideOnselOnSelectBeaconItemCallBack(){
         return this.onSelectBeaconItemCallBack;
     }
 }

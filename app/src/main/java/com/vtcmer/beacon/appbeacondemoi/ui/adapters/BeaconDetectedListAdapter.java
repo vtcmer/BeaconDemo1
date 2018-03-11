@@ -1,7 +1,6 @@
 package com.vtcmer.beacon.appbeacondemoi.ui.adapters;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +11,13 @@ import android.widget.TextView;
 
 import com.vtcmer.beacon.appbeacondemoi.R;
 import com.vtcmer.beacon.appbeacondemoi.model.AppIBeacon;
-import com.vtcmer.beacon.appbeacondemoi.scanner.OnSelectBeaconItemCallBack;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.SelectBeaconItemCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.vtcmer.beacon.appbeacondemoi.R.drawable.position_far;
-import static com.vtcmer.beacon.appbeacondemoi.R.drawable.position_inmediate;
-import static com.vtcmer.beacon.appbeacondemoi.R.drawable.position_near;
-import static com.vtcmer.beacon.appbeacondemoi.R.drawable.position_undefined;
 
 /**
  * Created by vtcmer on 9/03/18.
@@ -33,11 +27,11 @@ public class BeaconDetectedListAdapter extends RecyclerView.Adapter<BeaconDetect
 
 
     private List<AppIBeacon> iBeaconList = new ArrayList<AppIBeacon>();
-    private OnSelectBeaconItemCallBack onSelectBeaconItemCallBack;
+    private SelectBeaconItemCallBack onSelectBeaconItemCallBack;
     private Context context;
 
 
-    public BeaconDetectedListAdapter(final OnSelectBeaconItemCallBack onSelectBeaconItemCallBack, final Context context) {
+    public BeaconDetectedListAdapter(final SelectBeaconItemCallBack onSelectBeaconItemCallBack, final Context context) {
         this.onSelectBeaconItemCallBack = onSelectBeaconItemCallBack;
         this.context = context;
     }
@@ -137,7 +131,7 @@ public class BeaconDetectedListAdapter extends RecyclerView.Adapter<BeaconDetect
             ButterKnife.bind(this, view);
         }
 
-        public void setOnSelectBeaconItemCallBack(final AppIBeacon appIBeacon, final OnSelectBeaconItemCallBack onSelectBeaconItemCallBack) {
+        public void setOnSelectBeaconItemCallBack(final AppIBeacon appIBeacon, final SelectBeaconItemCallBack onSelectBeaconItemCallBack) {
 
             containerDetail.setOnClickListener(new View.OnClickListener() {
                 @Override

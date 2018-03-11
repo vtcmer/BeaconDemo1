@@ -1,4 +1,4 @@
-package com.vtcmer.beacon.appbeacondemoi.scanner;
+package com.vtcmer.beacon.appbeacondemoi.scanner.api;
 
 /**
  * Created by vtcmer on 8/03/18.

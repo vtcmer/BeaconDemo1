@@ -61,7 +61,6 @@ public class AppIBeacon {
                 "uuid='" + uuid + '\'' +
                 ", major=" + major +
                 ", minor=" + minor +
-                ", distance=" + distance +
                 '}';
     }
 }

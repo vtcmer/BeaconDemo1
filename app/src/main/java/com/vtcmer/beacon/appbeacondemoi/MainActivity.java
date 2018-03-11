@@ -11,10 +11,12 @@ import android.util.Log;
 
 import com.vtcmer.beacon.appbeacondemoi.di.ScannerBeaconComponent;
 import com.vtcmer.beacon.appbeacondemoi.model.AppIBeacon;
-import com.vtcmer.beacon.appbeacondemoi.scanner.OnScannerBeaconServiceCallback;
-import com.vtcmer.beacon.appbeacondemoi.scanner.OnSelectBeaconItemCallBack;
-import com.vtcmer.beacon.appbeacondemoi.scanner.ScannerBeaconService;
-import com.vtcmer.beacon.appbeacondemoi.scanner.ScannerBeaconServiceImpl;
+import com.vtcmer.beacon.appbeacondemoi.model.AppIBeaconDetail;
+import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconPresenter;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.ScannerBeaconServiceCallback;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.SelectBeaconItemCallBack;
+import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconService;
+import com.vtcmer.beacon.appbeacondemoi.ui.ScannerBeaconView;
 import com.vtcmer.beacon.appbeacondemoi.ui.adapters.BeaconDetectedListAdapter;
 
 import java.util.List;
@@ -23,7 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements OnScannerBeaconServiceCallback, OnSelectBeaconItemCallBack {
+public class MainActivity extends AppCompatActivity
+        implements ScannerBeaconServiceCallback, SelectBeaconItemCallBack, ScannerBeaconView {
 
     protected static final String TAG = "MainActivity";
     @BindView(R.id.recyclerView)
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnScannerBeaconSe
 
     private ScannerBeaconService scannerBeaconService;
     private BeaconDetectedListAdapter adapter;
+    private ScannerBeaconPresenter scannerBeaconPresenter;
 
     boolean isScanning = false;
 
@@ -48,10 +52,11 @@ public class MainActivity extends AppCompatActivity implements OnScannerBeaconSe
     private void setupInjection(){
         ApplicationIBeacon applicationIBeacon = (ApplicationIBeacon) this.getApplication();
 
-        ScannerBeaconComponent scannerBeaconComponent = applicationIBeacon.getScannerBeaconComponent(this,this,this);
+        ScannerBeaconComponent scannerBeaconComponent = applicationIBeacon.getScannerBeaconComponent(this,this,this, this);
 
         this.scannerBeaconService = scannerBeaconComponent.getScannerBeaconService();
         this.adapter = scannerBeaconComponent.getBeaconDetectedListAdapter();
+        this.scannerBeaconPresenter = scannerBeaconComponent.getScannerBeaconPresenter();
 
     }
 
@@ -64,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements OnScannerBeaconSe
         this.isScanning = false;
         this.setupInjection();
         setupRecyclerView();
-     
+
 
     }
 
@@ -137,6 +142,26 @@ public class MainActivity extends AppCompatActivity implements OnScannerBeaconSe
 
     @Override
     public void onSelectItem(AppIBeacon appIBeacon) {
-        Log.i(TAG,"Item selected: "+appIBeacon.toString());
+        this.scannerBeaconPresenter.getDetail(appIBeacon);
+    }
+
+    @Override
+    public void showDetail(AppIBeaconDetail detail) {
+        Log.i(TAG,"Item Detail: "+detail.getDescription());
+    }
+
+    @Override
+    public void showError(String message) {
+        Log.i(TAG,"Error: "+message);
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+
     }
 }

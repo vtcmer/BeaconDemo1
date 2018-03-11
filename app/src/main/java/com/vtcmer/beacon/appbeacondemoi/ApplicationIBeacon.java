@@ -6,8 +6,9 @@ import android.content.Context;
 import com.vtcmer.beacon.appbeacondemoi.di.DaggerScannerBeaconComponent;
 import com.vtcmer.beacon.appbeacondemoi.di.ScannerBeaconComponent;
 import com.vtcmer.beacon.appbeacondemoi.di.ScannerBeaconModule;
-import com.vtcmer.beacon.appbeacondemoi.scanner.OnScannerBeaconServiceCallback;
-import com.vtcmer.beacon.appbeacondemoi.scanner.OnSelectBeaconItemCallBack;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.ScannerBeaconServiceCallback;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.SelectBeaconItemCallBack;
+import com.vtcmer.beacon.appbeacondemoi.ui.ScannerBeaconView;
 
 /**
  * Created by vtcmer on 10/03/18.
@@ -17,10 +18,13 @@ public class ApplicationIBeacon extends Application {
 
 
 
-    public ScannerBeaconComponent getScannerBeaconComponent(Context context, OnScannerBeaconServiceCallback onScannerBeaconServiceCallback, OnSelectBeaconItemCallBack onSelectBeaconItemCallBack){
+    public ScannerBeaconComponent getScannerBeaconComponent(Context context,
+                                                            ScannerBeaconServiceCallback onScannerBeaconServiceCallback,
+                                                            SelectBeaconItemCallBack onSelectBeaconItemCallBack,
+                                                            ScannerBeaconView view){
         return DaggerScannerBeaconComponent
                 .builder()
-                .scannerBeaconModule(new ScannerBeaconModule(context,onScannerBeaconServiceCallback, onSelectBeaconItemCallBack))
+                .scannerBeaconModule(new ScannerBeaconModule(context,onScannerBeaconServiceCallback, onSelectBeaconItemCallBack, view))
                 .build();
     }
 }
