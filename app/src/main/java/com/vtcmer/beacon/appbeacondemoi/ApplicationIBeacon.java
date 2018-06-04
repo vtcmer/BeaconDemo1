@@ -14,7 +14,7 @@ import com.vtcmer.beacon.appbeacondemoi.ui.ScannerBeaconView;
  * Created by vtcmer on 10/03/18.
  */
 
-public class ApplicationIBeacon extends Aplication {
+public class ApplicationIBeacon extends Application {
 
 
 
