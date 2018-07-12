@@ -1,2 +1,0 @@
-File 1 master --> Modificado para ver el merge
-File 1 modificado por fix/iss1
