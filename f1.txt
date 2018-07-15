@@ -1,3 +1,4 @@
 Esto es una prueba
-Modificación  por el master
-Incluida una nueva línea
+ModificaciÃ³n  por el master
+Incluida una nueva lÃ­nea
+Otra nueva lÃ­nea
