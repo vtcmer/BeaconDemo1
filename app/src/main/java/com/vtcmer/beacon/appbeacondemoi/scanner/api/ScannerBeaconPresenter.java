@@ -8,11 +8,13 @@ import com.vtcmer.beacon.appbeacondemoi.model.AppIBeacon;
 
 public interface ScannerBeaconPresenter {
 
+
     /**
-     * Recuperación de la información del detalle de beacon
+     * Recuperación del beacon
      * @param appIBeacon
      */
-    void getDetail(final AppIBeacon appIBeacon);
+    void getIntro(final AppIBeacon appIBeacon);
+
 
     /**
      * Eliminación del presentardor

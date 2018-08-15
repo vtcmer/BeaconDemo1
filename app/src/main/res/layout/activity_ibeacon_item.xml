@@ -12,7 +12,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:id="@+id/imgBeacon"
-        android:src="@mipmap/ble"
+        android:src="H"
         android:paddingRight="5dp"
         android:layout_alignParentTop="true" />
 
@@ -27,13 +27,33 @@
         android:layout_toEndOf="@+id/imgBeacon" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
         style="@style/textNormal"
         android:text="bb:11:00"
         android:id="@+id/uuid"
         android:layout_toRightOf="@+id/uuidLb"
           />
+
+    <TextView
+        android:id="@+id/distanciaLb"
+        android:layout_marginLeft="10dp"
+        style="@style/textBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/uuid"
+        android:text="Distancia:" />
+
+    <TextView
+        android:id="@+id/distance"
+        style="@style/textNormal"
+        android:layout_marginTop="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/distanciaLb"
+        android:layout_toRightOf="@+id/distanciaLb"
+        android:text="Medium Text" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,21 +104,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/textBold"
-        android:text="Major:"
-        android:id="@+id/distanceLb"
+        android:text="Ubicación:"
+        android:id="@+id/ubicacionLb"
         android:layout_below="@+id/majorLb"
         android:layout_alignLeft="@+id/majorLb"
         android:layout_alignStart="@+id/majorLb" />
 
     <TextView
-        android:id="@+id/distance"
+        android:id="@+id/ubicacion"
         style="@style/textNormal"
         android:layout_marginTop="3dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/majorLb"
-        android:layout_toEndOf="@+id/majorLb"
-        android:layout_toRightOf="@+id/majorLb"
+        android:layout_toEndOf="@+id/ubicacionLb"
+        android:layout_toRightOf="@+id/ubicacionLb"
+        android:text="Medium Text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/textBold"
+        android:text="Descripción:"
+        android:id="@+id/descripcionLb"
+        android:layout_below="@+id/ubicacionLb"
+        android:layout_alignLeft="@+id/ubicacionLb"
+        android:layout_alignStart="@+id/ubicacionLb" />
+
+
+    <TextView
+        android:id="@+id/descripcion"
+        style="@style/textNormal"
+        android:layout_marginTop="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ubicacionLb"
+        android:layout_toEndOf="@+id/descripcionLb"
+        android:layout_toRightOf="@+id/descripcionLb"
         android:text="Medium Text" />
 
 

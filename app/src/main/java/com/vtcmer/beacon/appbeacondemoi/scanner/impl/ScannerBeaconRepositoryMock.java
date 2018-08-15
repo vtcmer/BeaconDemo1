@@ -1,11 +1,14 @@
 package com.vtcmer.beacon.appbeacondemoi.scanner.impl;
 
 import com.vtcmer.beacon.appbeacondemoi.model.AppIBeacon;
+import com.vtcmer.beacon.appbeacondemoi.model.AppIBeaconCriteria;
 import com.vtcmer.beacon.appbeacondemoi.model.AppIBeaconDetail;
 import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconRepository;
 import com.vtcmer.beacon.appbeacondemoi.scanner.callback.BeaconDetailCallback;
+import com.vtcmer.beacon.appbeacondemoi.scanner.callback.BeaconImageCallback;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +34,24 @@ public class ScannerBeaconRepositoryMock implements ScannerBeaconRepository {
         }else{
             beaconDetailCallback.onError(appIBeacon.toString()+" not found");
         }
+
+    }
+
+    @Override
+    public void getIbeaconIntro(AppIBeacon appIBeacon, BeaconDetailCallback beaconDetailCallback) {
+
+    }
+
+
+
+
+    @Override
+    public void getIbeaconDetail(String id, BeaconDetailCallback beaconDetailCallback) {
+
+    }
+
+    @Override
+    public void getIbeaconDetailImage(String id, BeaconImageCallback beaconImageCallback) {
 
     }
 

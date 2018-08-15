@@ -7,10 +7,8 @@ import com.vtcmer.beacon.appbeacondemoi.model.AppIBeaconDetail;
  * Created by vtcmer on 11/03/18.
  */
 
-public interface ScannerBeaconView {
+public interface ScannerBeaconView extends BaseView{
 
-    void showDetail(final AppIBeaconDetail detail);
-    void showError(final String message);
-    void showProgressBar();
-    void hideProgressBar();
+    void showIntro(final AppIBeaconDetail detail);
+
 }

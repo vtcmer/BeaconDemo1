@@ -22,18 +22,18 @@ public class ScannerBeaconPresenterImpl implements ScannerBeaconPresenter {
     }
 
     @Override
-    public void getDetail(AppIBeacon appIBeacon) {
+    public void getIntro(AppIBeacon appIBeacon) {
 
         if (this.scannerBeaconView != null){
             this.scannerBeaconView.showProgressBar();
         }
 
-        this.scannerBeaconInteractor.getDetail(appIBeacon, new BeaconDetailCallback() {
+        this.scannerBeaconInteractor.getIntro(appIBeacon, new BeaconDetailCallback() {
 
             @Override
             public void onSuccess(AppIBeaconDetail appIBeaconDetail) {
                 scannerBeaconView.hideProgressBar();
-                scannerBeaconView.showDetail(appIBeaconDetail);
+                scannerBeaconView.showIntro(appIBeaconDetail);
 
             }
 
@@ -46,6 +46,8 @@ public class ScannerBeaconPresenterImpl implements ScannerBeaconPresenter {
         });
 
     }
+
+
 
     @Override
     public void destroy() {

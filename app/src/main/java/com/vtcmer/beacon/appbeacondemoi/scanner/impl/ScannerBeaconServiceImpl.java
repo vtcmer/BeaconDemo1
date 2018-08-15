@@ -128,22 +128,11 @@ public class ScannerBeaconServiceImpl implements ScannerBeaconService, BeaconCon
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
 
+
         if (beacons.size() > 0) {
-            List<AppIBeacon> appIBeaconList = new ArrayList<AppIBeacon>();
-            for (Beacon beacon: beacons){
 
-                AppIBeacon iBeacon = new AppIBeacon();
-                iBeacon.setUuid(beacon.getId1().toString());
-                iBeacon.setMajor(beacon.getId2().toInt());
-                iBeacon.setMinor(beacon.getId3().toInt());
-                iBeacon.setDistance(beacon.getDistance());
-                appIBeaconList.add(iBeacon);
-
-
-                Log.d(TAG, iBeacon.toString());
-            }
-
-            Collections.sort(appIBeaconList, new Comparator<AppIBeacon>() {
+/*
+            Collections.sort(beacons, new Comparator<AppIBeacon>() {
                 @Override
                 public int compare(AppIBeacon b1, AppIBeacon b2) {
 
@@ -155,8 +144,10 @@ public class ScannerBeaconServiceImpl implements ScannerBeaconService, BeaconCon
 
                 }
             });
+            */
 
-            onScannerBeaconServiceCallback.onBeaconsFound(appIBeaconList);
+            onScannerBeaconServiceCallback.onBeaconsFound(beacons);
+
         }
     }
 

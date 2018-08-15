@@ -1,5 +1,6 @@
 package com.vtcmer.beacon.appbeacondemoi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,9 @@ import com.vtcmer.beacon.appbeacondemoi.scanner.api.ScannerBeaconService;
 import com.vtcmer.beacon.appbeacondemoi.ui.ScannerBeaconView;
 import com.vtcmer.beacon.appbeacondemoi.ui.adapters.BeaconDetectedListAdapter;
 
+import org.altbeacon.beacon.Beacon;
+
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -73,6 +77,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     @Override
     protected void onDestroy() {
@@ -81,48 +94,37 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBeaconFound(final AppIBeacon iBeacon) {
+    public void onBeaconsFound(final Collection<Beacon> beacons) {
         runOnUiThread(new Runnable() {
             public void run() {
                 try {
-                    // showToastMessage(str.toString());
-                    //data.setText(info);
-                    // renderBeacon(iBeacon);
-                    adapter.addIBeaconItem(iBeacon);
-                } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onBeaconsFound(final List<AppIBeacon> iBeacons) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                try {
-                    adapter.setIBeacons(iBeacons);
-                } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
-                }
-            }
-        });
-
-    }
-
-    @Override
-    public void cleanAllBeacons() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                try {
-
                     adapter.clean();
+                    for (Beacon beacon: beacons){
+
+                        AppIBeacon iBeacon = new AppIBeacon();
+                        iBeacon.setUuid(beacon.getId1().toString());
+                        iBeacon.setMajor(beacon.getId2().toInt());
+                        iBeacon.setMinor(beacon.getId3().toInt());
+                        iBeacon.setDistance(beacon.getDistance());
+                        scannerBeaconPresenter.getIntro(iBeacon);
+                    }
+
+
                 } catch (Exception e) {
                     Log.d(TAG, e.getMessage());
                 }
             }
         });
     }
+
+
+
+    @Override
+    public void showIntro(AppIBeaconDetail detail) {
+        adapter.addIBeaconItem(detail);
+    }
+
+
 
 
     @OnClick(R.id.btnAction)
@@ -142,13 +144,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSelectItem(AppIBeacon appIBeacon) {
-        this.scannerBeaconPresenter.getDetail(appIBeacon);
+       // this.scannerBeaconPresenter.getDetail(appIBeacon.getId());
+
+        Intent intent = new Intent(this, DetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("ID", appIBeacon.getId());
+        intent.putExtras(bundle);
+        startActivity(intent);
+
     }
 
-    @Override
-    public void showDetail(AppIBeaconDetail detail) {
-        Log.i(TAG,"Item Detail: "+detail.getDescription());
-    }
+
+
+
 
     @Override
     public void showError(String message) {

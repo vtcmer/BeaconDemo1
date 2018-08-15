@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.vtcmer.beacon.appbeacondemoi.R;
-import com.vtcmer.beacon.appbeacondemoi.model.AppIBeacon;
+import com.vtcmer.beacon.appbeacondemoi.model.AppIBeaconDetail;
 import com.vtcmer.beacon.appbeacondemoi.scanner.callback.SelectBeaconItemCallBack;
 
 import java.util.ArrayList;
@@ -26,7 +26,8 @@ import butterknife.ButterKnife;
 public class BeaconDetectedListAdapter extends RecyclerView.Adapter<BeaconDetectedListAdapter.ViewHolderBeacon> {
 
 
-    private List<AppIBeacon> iBeaconList = new ArrayList<AppIBeacon>();
+
+    private List<AppIBeaconDetail> iBeaconList = new ArrayList<AppIBeaconDetail>();
     private SelectBeaconItemCallBack onSelectBeaconItemCallBack;
     private Context context;
 
@@ -36,13 +37,13 @@ public class BeaconDetectedListAdapter extends RecyclerView.Adapter<BeaconDetect
         this.context = context;
     }
 
-    public void setIBeacons(final List<AppIBeacon> appIBeacons) {
+    public void setIBeacons(final List<AppIBeaconDetail> appIBeacons) {
         this.iBeaconList.clear();
         this.iBeaconList.addAll(appIBeacons);
         this.notifyDataSetChanged();
     }
 
-    public void addIBeaconItem(final AppIBeacon iBeacon) {
+    public void addIBeaconItem(final AppIBeaconDetail iBeacon) {
         this.iBeaconList.add(iBeacon);
         this.notifyDataSetChanged();
     }
@@ -61,43 +62,45 @@ public class BeaconDetectedListAdapter extends RecyclerView.Adapter<BeaconDetect
     @Override
     public void onBindViewHolder(ViewHolderBeacon holder, int position) {
 
-        AppIBeacon iBeacon = this.iBeaconList.get(position);
+        AppIBeaconDetail iBeacon = this.iBeaconList.get(position);
         holder.uuid.setText(iBeacon.getUuid());
         holder.major.setText(String.valueOf(iBeacon.getMajor()));
         holder.minor.setText(String.valueOf(iBeacon.getMinor()));
         holder.distance.setText(String.valueOf(iBeacon.getDistance()));
-        holder.setOnSelectBeaconItemCallBack(iBeacon,this.onSelectBeaconItemCallBack);
+        holder.ubicacion.setText(iBeacon.getName());
+        holder.descripcion.setText(iBeacon.getDescription());
+        holder.setOnSelectBeaconItemCallBack(iBeacon, this.onSelectBeaconItemCallBack);
 
-        if((position%2)!=0){
+        if ((position % 2) != 0) {
             holder.containerDetail.setBackgroundResource(R.drawable.item_odd);
         }
 
 
-        this.updatePositionImage(holder,iBeacon);
+        this.updatePositionImage(holder, iBeacon);
 
     }
 
     /**
      * Indicador de posición
+     *
      * @param holder
      * @param iBeacon
      */
-    private void updatePositionImage(ViewHolderBeacon holder, AppIBeacon iBeacon){
+    private void updatePositionImage(ViewHolderBeacon holder, AppIBeaconDetail iBeacon) {
 
         double distante = iBeacon.getDistance();
 
         holder.position.setBackgroundResource(R.drawable.position_far);
 
-        if ((distante >=0) && (distante <2)){
+        if ((distante >= 0) && (distante < 2)) {
             holder.position.setBackgroundResource(R.drawable.position_inmediate);
-        }else  if ((distante >=2) && (distante <6)){
+        } else if ((distante >= 2) && (distante < 6)) {
             holder.position.setBackgroundResource(R.drawable.position_near);
-        } else  if ((distante >=6) && (distante <10)){
+        } else if ((distante >= 6) && (distante < 10)) {
             holder.position.setBackgroundResource(R.drawable.position_far);
-        } else  if (distante >=10){
+        } else if (distante >= 10) {
             holder.position.setBackgroundResource(R.drawable.position_undefined);
         }
-
 
 
     }
@@ -117,6 +120,10 @@ public class BeaconDetectedListAdapter extends RecyclerView.Adapter<BeaconDetect
         TextView minor;
         @BindView(R.id.distance)
         TextView distance;
+        @BindView(R.id.ubicacion)
+        TextView ubicacion;
+        @BindView(R.id.descripcion)
+        TextView descripcion;
         @BindView(R.id.containerDetail)
         RelativeLayout containerDetail;
         @BindView(R.id.position)
@@ -131,7 +138,7 @@ public class BeaconDetectedListAdapter extends RecyclerView.Adapter<BeaconDetect
             ButterKnife.bind(this, view);
         }
 
-        public void setOnSelectBeaconItemCallBack(final AppIBeacon appIBeacon, final SelectBeaconItemCallBack onSelectBeaconItemCallBack) {
+        public void setOnSelectBeaconItemCallBack(final AppIBeaconDetail appIBeacon, final SelectBeaconItemCallBack onSelectBeaconItemCallBack) {
 
             containerDetail.setOnClickListener(new View.OnClickListener() {
                 @Override

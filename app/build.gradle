@@ -14,6 +14,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BEACON_API_HOST", project.property('BEACON_API_HOST')
+        }
+        debug {
+            buildConfigField "String", "BEACON_API_HOST", project.property('BEACON_API_HOST')
         }
     }
 }
@@ -22,6 +26,8 @@ android {
 final daggerVersion = '2.11'
 final butterknifeVersion = '8.5.1'
 final supportLibraryVersion = '26.1.0'
+final retrofitVersion = '2.3.0'
+final glideVersion = '3.6.1'
 
 
 dependencies {
@@ -42,4 +48,17 @@ dependencies {
     compile 'org.altbeacon:android-beacon-library:2.13.1'
     compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
     compile 'com.android.support:design:26.1.0'
+
+    compile 'com.squareup.okhttp3:logging-interceptor:3.7.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.google.code.gson:gson:2.8.1'
+
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
+
+    compile "com.github.bumptech.glide:glide:${glideVersion}"
+
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
 }

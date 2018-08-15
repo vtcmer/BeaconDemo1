@@ -1,12 +1,10 @@
 package com.vtcmer.beacon.appbeacondemoi.model;
 
 /**
- * Created by vtcmer on 8/03/18.
+ * Created by vtcmer on 25/03/18.
  */
 
-public class AppIBeacon {
-
-    private String id;
+public class AppIBeaconCriteria {
 
     /**
      * Identificador de beacon
@@ -20,18 +18,6 @@ public class AppIBeacon {
      * Minor Beacon
      */
     private Integer minor;
-    /**
-     * Distancia Beacon
-     */
-    private double distance;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUuid() {
         return uuid;
@@ -55,22 +41,5 @@ public class AppIBeacon {
 
     public void setMinor(Integer minor) {
         this.minor = minor;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
-    @Override
-    public String toString() {
-        return "ApplicationIBeacon{" +
-                "uuid='" + uuid + '\'' +
-                ", major=" + major +
-                ", minor=" + minor +
-                '}';
     }
 }
