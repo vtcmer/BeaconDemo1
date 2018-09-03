@@ -40,6 +40,13 @@ public class ScannerBeaconRepositoryMock implements ScannerBeaconRepository {
     @Override
     public void getIbeaconIntro(AppIBeacon appIBeacon, BeaconDetailCallback beaconDetailCallback) {
 
+        AppIBeaconDetail detail = this.getDetail(appIBeacon);
+        if (detail != null) {
+            beaconDetailCallback.onSuccess(detail);
+        }else{
+            beaconDetailCallback.onError(appIBeacon.toString()+" not found");
+        }
+
     }
 
 
@@ -47,6 +54,8 @@ public class ScannerBeaconRepositoryMock implements ScannerBeaconRepository {
 
     @Override
     public void getIbeaconDetail(String id, BeaconDetailCallback beaconDetailCallback) {
+
+
 
     }
 
