@@ -11,6 +11,7 @@ import com.vtcmer.beacon.appbeacondemoi.scanner.callback.ScannerBeaconServiceCal
 import com.vtcmer.beacon.appbeacondemoi.scanner.callback.SelectBeaconItemCallBack;
 import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconInteractorImpl;
 import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconPresenterImpl;
+import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconRepositoryMock;
 import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconRepositoryRest;
 import com.vtcmer.beacon.appbeacondemoi.scanner.impl.ScannerBeaconServiceImpl;
 import com.vtcmer.beacon.appbeacondemoi.ui.ScannerBeaconView;
@@ -41,7 +42,8 @@ public class BeaconServiceModule {
     @Provides
     @Singleton
     ScannerBeaconRepository provideScannerBeaconRepository(RestApiIbeaconClient restApiIbeaconClient){
-        return new ScannerBeaconRepositoryRest(restApiIbeaconClient);
+        //return new ScannerBeaconRepositoryRest(restApiIbeaconClient);
+        return new ScannerBeaconRepositoryMock();
     }
 
 
